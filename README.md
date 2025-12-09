@@ -1,73 +1,102 @@
-# React + TypeScript + Vite
+# BioRegs
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive patient management platform for peptide therapy protocols, built for clinicians and patients.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+BioRegs is a multi-portal application that streamlines peptide therapy management through three distinct user experiences:
 
-## React Compiler
+- **Patient Portal** - Track protocols, log check-ins, monitor symptoms and progress
+- **Clinician Portal** - Manage patients, create protocols, track visit logs
+- **Admin Portal** - Manage users, peptides, and symptoms across the platform
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend:** React 18 + TypeScript
+- **Build Tool:** Vite
+- **UI Framework:** shadcn/ui + Tailwind CSS
+- **Backend:** Supabase (Auth + Database)
+- **Charts:** Recharts
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js 18+
+- npm or yarn
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Add your Supabase credentials to .env.local
+
+# Start development server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Create a `.env.local` file with:
 ```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+## Project Structure
+```
+src/
+├── features/
+│   ├── admin/          # Admin portal components & hooks
+│   ├── clinician/      # Clinician portal components & hooks
+│   ├── patient/        # Patient portal components & hooks
+│   └── auth/           # Authentication & registration
+├── components/
+│   ├── ui/             # shadcn/ui components
+│   ├── layout/         # Navigation & layout components
+│   └── insights/       # Charts & analytics components
+├── contexts/           # React contexts (Auth, Portal, Theme)
+├── hooks/              # Shared hooks
+└── types/              # TypeScript type definitions
+```
+
+## Features
+
+### Patient Portal
+- Multi-step registration with phone verification
+- Protocol tracking and peptide information
+- Daily symptom check-ins
+- Progress visualization and insights
+
+### Clinician Portal
+- Patient invitation and management
+- Custom protocol creation
+- Visit log tracking
+- Patient insights dashboard
+
+### Admin Portal
+- User management across all roles
+- Peptide and symptom management
+- Platform-wide analytics
+
+## Development
+```bash
+# Run dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Lint code
+npm run lint
+```
+
+## License
+
+Private - Chromatic Studio, LLC
