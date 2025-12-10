@@ -5,7 +5,6 @@ import { RegisterForm } from '../components/RegisterForm'
 import { PatientRegistrationForm } from '../components/PatientRegistrationForm'
 import { ForgotPasswordForm } from '../components/ForgotPasswordForm'
 import { ResetPasswordForm } from '../components/ResetPasswordForm'
-import { LoadingView } from '@/components/ui/loading-view'
 
 type AuthView = 'login' | 'register' | 'forgot-password' | 'reset-password'
 

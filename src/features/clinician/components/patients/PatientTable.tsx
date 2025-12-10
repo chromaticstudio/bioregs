@@ -9,10 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Profile } from '@/types'
+import { PatientProfile } from '@/types'
 
 type Props = {
-  patients: Profile[]
+  patients: PatientProfile[]
   onLogVisit: (patientId: string) => void
 }
 

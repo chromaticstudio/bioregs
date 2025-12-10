@@ -69,7 +69,8 @@ export function usePortalNavigation(portal: PortalView) {
           baseItems.push({
             title: 'Check-In',
             icon: ClipboardCheck,
-            active: true
+            active: true,
+            onClick: () => {}
           })
         }
 
