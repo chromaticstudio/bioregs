@@ -9,7 +9,7 @@ type Props = {
   firstName?: string
   lastName?: string
   email?: string
-  onRegister: (email: string, password: string, firstName: string, lastName: string) => Promise<void>
+  onRegister: (email: string, password: string, firstName: string, lastName: string) => Promise<{ success: boolean, error?: string, needsConfirmation?: boolean }>
   onNavigateToLogin: () => void
 }
 
@@ -21,6 +21,8 @@ export function RegisterForm({ firstName: initialFirstName = '', lastName: initi
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
+  const [needsConfirmation, setNeedsConfirmation] = useState(false)
 
   // Update form fields when invitation data arrives
   useEffect(() => {
@@ -38,6 +40,7 @@ export function RegisterForm({ firstName: initialFirstName = '', lastName: initi
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    setSuccess(false)
 
     if (password !== confirmPassword) {
       setError('Passwords do not match')
@@ -52,7 +55,14 @@ export function RegisterForm({ firstName: initialFirstName = '', lastName: initi
     setLoading(true)
 
     try {
-      await onRegister(email, password, firstName, lastName)
+      const result = await onRegister(email, password, firstName, lastName)
+      
+      if (result.success) {
+        setSuccess(true)
+        setNeedsConfirmation(result.needsConfirmation || false)
+      } else if (result.error) {
+        setError(result.error)
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to register')
     } finally {
@@ -67,6 +77,14 @@ export function RegisterForm({ firstName: initialFirstName = '', lastName: initi
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <AlertMessage message={error} />
+        <AlertMessage 
+          variant="success"
+          message={success ? (needsConfirmation ? "Please check your email" : "Account created!") : undefined}
+          description={success ? (needsConfirmation 
+            ? `We've sent a confirmation link to ${email}. Click the link to activate your account.`
+            : "Your account has been created and you're ready to get started."
+          ) : undefined}
+        />
 
         <div className="grid grid-cols-2 gap-4">
           <Field>

@@ -52,13 +52,16 @@ export function useRegister() {
     setError('')
     setLoading(true)
 
-    const { error: signUpError } = await signUp(email, password, firstName, lastName)
+    const { data, error: signUpError } = await signUp(email, password, firstName, lastName)
     
     if (signUpError) {
       setError(signUpError.message)
       setLoading(false)
       return { success: false, error: signUpError.message }
     }
+
+    // Check if user needs email confirmation
+    const needsConfirmation = !data?.user || data.user.identities?.length === 0
 
     // If this was an invitation, mark it as accepted
     if (invitation) {
@@ -73,7 +76,7 @@ export function useRegister() {
     
     setSuccess(true)
     setLoading(false)
-    return { success: true }
+    return { success: true, needsConfirmation }
   }
 
   return {

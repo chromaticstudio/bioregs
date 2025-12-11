@@ -43,8 +43,20 @@ export function Auth() {
     firstName: string,
     lastName: string
   ) => {
-    const { error } = await signUp(email, password, firstName, lastName)
-    if (error) throw new Error(error.message)
+    const { data, error } = await signUp(email, password, firstName, lastName)
+    
+    console.log('SignUp Response:', data) // ADD THIS LINE
+    
+    if (error) {
+      return { success: false, error: error.message }
+    }
+    
+    // Check if user needs email confirmation
+    const needsConfirmation = (data as any)?.session === null
+    
+    console.log('needsConfirmation:', needsConfirmation) // ADD THIS LINE
+    
+    return { success: true, needsConfirmation }
   }
 
   const handleForgotPasswordSubmit = async (e: React.FormEvent) => {
